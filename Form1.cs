@@ -15,15 +15,21 @@ namespace TimerApp2
         public KitchenTimer()
         {
             InitializeComponent();
+            SetTimer.Interval = 1000; // タイマーの間隔を1000ミリ秒（1秒）に設定
         }
 
         // 計測時間
         int sec = 0;
         private void ViewTime()
         {
-            TimerLabel.Text = "" + sec / 36000 % 10 + sec / 3600 % 10 +
+            int hours = sec / 3600;
+            int minutes = (sec % 3600) / 60;
+            int seconds = sec % 60;
+            TimerLabel.Text = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+
+            /*TimerLabel.Text = "" + sec / 36000 % 10 + sec / 3600 % 10 +
                               ":" + sec / 600 % 6 + sec / 60 % 10 +
-                              ":" + sec / 10 % 6 + sec % 10;
+                              ":" + sec / 10 % 6 + sec % 10;*/
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -89,8 +95,8 @@ namespace TimerApp2
         // リセットボタンをクリック時、カウントを0に戻す
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            TimerLabel.Text = "00:00:00";
             sec = 0;
+            ViewTime();
         }
     }
 }
